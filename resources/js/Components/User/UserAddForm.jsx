@@ -23,9 +23,9 @@ export default function UserAddForm({ className = "" }) {
         <section className={className}>
             <header>
                 <h2 className="text-lg font-medium text-gray-900">
-                    Create User Form
+                    Add User Form
                 </h2>
-                <p className="text-base text-gray-600">Create a new user</p>
+                <p className="text-base text-gray-600">Add a new user</p>
             </header>
             <form onSubmit={submit} className="space-y-6">
                 <div>
@@ -80,7 +80,7 @@ export default function UserAddForm({ className = "" }) {
                     />
                 </div>
                 <div className="flex items-center gap-4">
-                    <PrimaryButton disabled={processing}>Save</PrimaryButton>
+                    <PrimaryButton disabled={processing}>Add</PrimaryButton>
 
                     <Transition
                         show={recentlySuccessful}
@@ -89,7 +89,7 @@ export default function UserAddForm({ className = "" }) {
                         leave="transition ease-in-out"
                         leaveTo="opacity-0"
                     >
-                        <p className="text-sm text-gray-600">Saved.</p>
+                        <p className="text-sm text-gray-600">Added.</p>
                     </Transition>
                 </div>
             </form>

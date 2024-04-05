@@ -6,7 +6,9 @@ use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Redis;
 
 class UserController extends Controller
 {
@@ -15,15 +17,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();  // Mengambil semua data user dari database
-        // ->paginate(5) ambil semua data dan pisahkan sesuai yang diinginkan
-        // ->orderBy('name', 'desc') mengurutkan data
-        // $users = User::latest()->get();
-        // $users = User::find(1)->get();
-        // $users= User::where('name', 'Wijaya')->get();
+        $users = User::orderBy('name', 'asc')->paginate(5);
         return Inertia::render('User/Index', [
             'users' => $users
-        ]); // Mengirim data ke view Inertia
+        ]);
     }
 
     /**
@@ -71,7 +68,7 @@ class UserController extends Controller
     public function edit(User $user)
     {
         // mengambil semua data user untuk mengirim data
-        $users = User::all();
+        $users = User::orderBy('name', 'asc')->paginate(5);
 
         // mengembalikan data user dan semua user ke view
         return Inertia::render('User/Index', [
@@ -105,6 +102,11 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //delete
+        if($user->profile != 'image/profiles/profile.png'){
+            Storage::delete($user->profile);
+        }
+        $user->delete();
+
+        return Redirect::route('user.index');
     }
 }

@@ -16,16 +16,16 @@ export default function Index({ auth }) {
         >
             <Head title="User" />
 
-            <div className="py-12 flex flex-col-reverse md:flex-row">
-                <div className="w-full md:w-1/2 mx-auto sm:px-6 lg:px-6">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div className="py-6 flex flex-col-reverse md:flex-row">
+                <div className="w-full md:w-1/2 mx-auto sm:px-6 lg:px-6 sm:mt-4 md:mt-0">
+                    <div className="bg-white overflow-hidden shadow-sm rounded-lg">
                         <div className="p-6 text-gray-900">
                             <UserTable className="space-y-6" />
                         </div>
                     </div>
                 </div>
                 <div className="w-full md:w-1/2 mx-auto sm:px-6 lg:px-6">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div className="bg-white overflow-hidden shadow-sm rounded-lg">
                         <div className="p-6 text-gray-900">
                             {route().current("user.index") && (
                                 <UserAddForm className="space-y-6" />

@@ -1,4 +1,5 @@
 import { Link, usePage } from "@inertiajs/react";
+import UserDeleteForm from "@/Components/User/UserDeleteForm";
 
 export default function UserTable({ className = "" }) {
     const users = usePage().props.users;
@@ -28,29 +29,47 @@ export default function UserTable({ className = "" }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {users.map((user) => (
-                            <tr className="bg-white border-b" key={user.id}>
+                        {users.data.map((user) => (
+                            <tr
+                                className="bg-white border-b text-xs"
+                                key={user.id}
+                            >
                                 <td className="px-6 py-4">{user.name}</td>
                                 <td className="px-6 py-4">{user.email}</td>
-                                <td className="px-6 py-4">
+                                <td className="px-6 py-4 flex">
                                     <Link
-                                        className="bg-emerald-800 text-white py-2 px-3 rounded-lg hover:opacity-80 transition duration-150 ease-in-out focus:ring-emerald-500 focus:ring-offset-2 mx-2"
+                                        className="bg-emerald-600 text-white py-2 px-3 rounded-lg hover:opacity-80 transition duration-150 ease-in-out focus:ring-emerald-500 focus:ring-offset-2 mx-2 uppercase"
                                         href={`/user/${user.id}/edit`}
                                     >
                                         Edit
                                     </Link>
-                                    |
-                                    <Link
-                                        className="bg-rose-800 text-white py-2 px-3 rounded-lg hover:opacity-80 transition duration-150 ease-in-out focus:ring-rose-500 focus:ring-offset-2 mx-2"
-                                        href={`/user/${user.id}/delete`}
-                                    >
-                                        Delete
-                                    </Link>
+                                    <UserDeleteForm
+                                        className="bg-red-600 text-white py-2 px-3 rounded-lg hover:opacity-80 transition duration-150 ease-in-out focus:ring-red-500 focus:ring-offset-2 mx-2 uppercase"
+                                        user={user}
+                                    />
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
+                <nav aria-label="Page navigation example">
+                    <ul className="inline-flex -space-x-px text-sm mt-2">
+                        {users.links.map((link) => (
+                            <li key={link.label}>
+                                <span>
+                                    <Link
+                                        href={link.url}
+                                        className={
+                                            "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white hover:bg-gray-100 hover:text-gray-700"
+                                        }
+                                    >
+                                        {link.label}
+                                    </Link>
+                                </span>
+                            </li>
+                        ))}
+                    </ul>
+                </nav>
             </div>
         </section>
     );
