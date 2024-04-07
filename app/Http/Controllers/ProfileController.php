@@ -63,7 +63,7 @@ class ProfileController extends Controller
     }
 
     public function upload(Request $request){
-        $request->validate(['image' => 'required|image|max:5120']);
+        $request->validate(['image' => 'required|image|max:5120|mimes:jpg,png,jpeg']);
 
         $id = Auth::user()->id;
         $user = User::find($id);

@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
+use App\Models\Gallery;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class GalleryController extends Controller
 {
@@ -11,7 +15,11 @@ class GalleryController extends Controller
      */
     public function index()
     {
-        //
+        // $id = Auth::user()->id;
+        // $galleries = Gallery::where('user_id', $id)->paginate(10);
+        // return Inertia::render('Gallery/Index', [
+        //     'galleries' => $galleries,
+        // ]);
     }
 
     /**
@@ -19,7 +27,7 @@ class GalleryController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Gallery/Create');
     }
 
     /**
@@ -27,7 +35,20 @@ class GalleryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'gallery_title' => 'required|string|min:4|max:50',
+            'gallery_image' => 'required|image|max:5120|mimes:png,jpg,jpeg',
+            'gallery_description' => 'required|string|min:10'
+        ]);
+
+        Gallery::create([
+            'user_id' => Auth::user()->id,
+            'title' => $request->gallery_title,
+            'description' => $request->gallery_description,
+            'image' => $request->File('gallery_image')->store('uploads/galleries')
+        ]);
+
+        return Redirect::route('galleries.create');
     }
 
     /**

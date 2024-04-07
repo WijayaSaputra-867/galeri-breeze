@@ -42,9 +42,29 @@ export default function Authenticated({ user, header, children }) {
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink
                                     href={route("user.index")}
-                                    active={route().current("user.index")}
+                                    active={route().current(
+                                        "user.index" || "user.edit"
+                                    )}
                                 >
                                     User
+                                </NavLink>
+                            </div>
+                            {/* MyGallery Link */}
+                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink
+                                    href={route("galleries.index")}
+                                    active={route().current("galleries.index")}
+                                >
+                                    My Albums
+                                </NavLink>
+                            </div>
+                            {/* Category Link */}
+                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink
+                                    href={route("categories.index")}
+                                    active={route().current("categories.index")}
+                                >
+                                    Category
                                 </NavLink>
                             </div>
                         </div>
@@ -63,7 +83,7 @@ export default function Authenticated({ user, header, children }) {
                                                         `/storage/` +
                                                         user.profile
                                                     }
-                                                    className="h-10 w-10 rounded-full"
+                                                    className="md:h-10 md:w-10 w-5 h-5 rounded-full"
                                                     alt={user.name}
                                                 />
 

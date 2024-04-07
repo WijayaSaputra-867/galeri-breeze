@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
@@ -49,6 +50,9 @@ Route::middleware('auth')->group(function () {
 
     // Route Pengguna
     Route::resource('/user', UserController::class);
+
+    // Route Kategori
+    Route::resource('/categories', CategoryController::class);
 });
 
 require __DIR__.'/auth.php';
