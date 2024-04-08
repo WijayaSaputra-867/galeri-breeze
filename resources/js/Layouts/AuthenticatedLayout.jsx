@@ -83,12 +83,18 @@ export default function Authenticated({ user, header, children }) {
                                             >
                                                 <img
                                                     src={
-                                                        `/storage/` +
-                                                        user.profile
+                                                        user.change_profile ==
+                                                        false
+                                                            ? user.profile
+                                                            : `/storage/` +
+                                                              user.profile
                                                     }
-                                                    className="md:h-10 md:w-10 w-5 h-5 rounded-full"
+                                                    className="md:h-10 md:w-10 w-5 h-5 rounded-full hidden md:flex"
                                                     alt={user.name}
                                                 />
+                                                <span className="flex md:hidden text-sm">
+                                                    {user.name}
+                                                </span>
 
                                                 <svg
                                                     className="ms-2 -me-0.5 h-4 w-4"

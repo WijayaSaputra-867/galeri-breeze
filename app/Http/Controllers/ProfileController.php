@@ -68,6 +68,10 @@ class ProfileController extends Controller
         $id = Auth::user()->id;
         $user = User::find($id);
 
+        if ($user->change_profile == false) {
+            $user->change_profile = true;
+        }
+
         $user->profile = $request->File('image')->store('uploads/profile');
         // dd($user->profile);
         $user->save();

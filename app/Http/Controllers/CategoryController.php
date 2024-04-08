@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
@@ -12,7 +14,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Category/Index');
     }
 
     /**
@@ -28,7 +30,15 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "name" => "required|string|min:3",
+        ]);
+
+        Category::create([
+            'name' => $request->name
+        ]);
+
+        return Redirect::route("categories.index");
     }
 
     /**

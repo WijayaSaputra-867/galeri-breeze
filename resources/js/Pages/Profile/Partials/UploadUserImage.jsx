@@ -28,7 +28,11 @@ export default function UploadUserImage({ className = "" }) {
             <form onSubmit={submit} className="mt-6 space-y-6">
                 <div>
                     <img
-                        src={user.profile}
+                        src={
+                            user.change_profile == false
+                                ? user.profile
+                                : `/storage/` + user.profile
+                        }
                         alt={user.name}
                         className="max-h-[180px] max-w-[180px]"
                     />
