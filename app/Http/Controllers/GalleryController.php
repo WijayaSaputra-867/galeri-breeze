@@ -15,11 +15,11 @@ class GalleryController extends Controller
      */
     public function index()
     {
-        // $id = Auth::user()->id;
-        // $galleries = Gallery::where('user_id', $id)->paginate(10);
-        // return Inertia::render('Gallery/Index', [
-        //     'galleries' => $galleries,
-        // ]);
+        $id = Auth::user()->id;
+        $galleries = Gallery::where('user_id', $id)->paginate(10);
+        return Inertia::render('Gallery/Index', [
+            'galleries' => $galleries,
+        ]);
     }
 
     /**

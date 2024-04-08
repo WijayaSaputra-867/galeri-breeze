@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Gallery;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     public function dashboard(){
-        return Inertia::render('Dashboard');
+        $galleries = Gallery::latest()->with('user')->get();
+        return Inertia::render('Dashboard', [
+            'galleries' => $galleries
+        ]);
     }
 }

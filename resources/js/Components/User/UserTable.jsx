@@ -1,5 +1,6 @@
 import { Link, usePage } from "@inertiajs/react";
 import UserDeleteForm from "@/Components/User/UserDeleteForm";
+import parse from "html-react-parser";
 
 export default function UserTable({ className = "" }) {
     const users = usePage().props.users;
@@ -63,7 +64,7 @@ export default function UserTable({ className = "" }) {
                                             "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white hover:bg-gray-100 hover:text-gray-700"
                                         }
                                     >
-                                        {link.label}
+                                        {parse(`${link.label}`)}
                                     </Link>
                                 </span>
                             </li>
