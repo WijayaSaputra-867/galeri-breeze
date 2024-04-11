@@ -20,6 +20,7 @@
         "vite": "^5.0"
     },
     "dependencies": {
-        "html-react-parser": "^5.1.10"
+        "html-react-parser": "^5.1.10",
+        "react-icons": "^5.0.1"
     }
 }

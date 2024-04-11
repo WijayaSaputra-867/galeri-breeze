@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
     public function dashboard(){
-        $galleries = Gallery::latest()->with('user')->get();
+        $galleries = Gallery::latest()->with('user')->with('category')->get();
         return Inertia::render('Dashboard', [
             'galleries' => $galleries
         ]);

@@ -1,5 +1,6 @@
 import { Head, usePage, Link } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { HiDotsVertical } from "react-icons/hi";
 
 export default function Create({ auth }) {
     const galleries = usePage().props.galleries;
@@ -22,13 +23,19 @@ export default function Create({ auth }) {
                             key={gallery.id}
                         >
                             <div className="md:max-w-[18rem] sm:max-w-[14rem] max-w-[12rem] mx-4 my-3 bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                                <div className="p-6 space-y-3">
-                                    <div>
-                                        <h2 className="text-gray-900 font-medium text-xl capitalize">
-                                            {gallery.title}
-                                        </h2>
-                                        <div className="text-base text-sky-700">
-                                            Category
+                                <div className="md:p-6 p-4 space-y-3">
+                                    <div className="flex flex-col">
+                                        <div className="relative ">
+                                            <h2 className="text-gray-900 font-medium md:text-xl sm:text-lg text-base capitalize top-0 left-0 absolute ">
+                                                {gallery.title}
+                                            </h2>
+                                            <div className="absolute right-0">
+                                                <HiDotsVertical />
+                                            </div>
+                                        </div>
+
+                                        <div className="mt-6 text-base text-sky-700">
+                                            {gallery.category.name}
                                         </div>
                                     </div>
 

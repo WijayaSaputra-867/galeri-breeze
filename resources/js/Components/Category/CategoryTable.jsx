@@ -1,10 +1,9 @@
 import { Link, usePage } from "@inertiajs/react";
-import UserDeleteForm from "@/Components/User/UserDeleteForm";
 import parse from "html-react-parser";
 import { FaPenToSquare } from "react-icons/fa6";
 
 export default function UserTable({ className = "" }) {
-    const users = usePage().props.users;
+    const categories = usePage().props.categories;
 
     return (
         <section className={className}>
@@ -23,32 +22,28 @@ export default function UserTable({ className = "" }) {
                                 Name
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                Email
-                            </th>
-                            <th scope="col" className="px-6 py-3">
                                 Action
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        {users.data.map((user) => (
+                        {categories.data.map((category) => (
                             <tr
                                 className="bg-white border-b text-xs"
-                                key={user.id}
+                                key={category.id}
                             >
-                                <td className="px-6 py-4">{user.name}</td>
-                                <td className="px-6 py-4">{user.email}</td>
+                                <td className="px-6 py-4">{category.name}</td>
                                 <td className="px-6 py-4 flex">
                                     <Link
                                         className="bg-emerald-600 text-white py-2 px-3 rounded-lg hover:opacity-80 transition duration-150 ease-in-out focus:ring-emerald-500 focus:ring-offset-2 mx-2 uppercase"
-                                        href={`/user/${user.id}/edit`}
+                                        href={`/category/${category.id}/edit`}
                                     >
                                         <FaPenToSquare className="mx-auto w-4 h-4" />
                                     </Link>
-                                    <UserDeleteForm
+                                    {/* <categoryDeleteForm
                                         className="bg-red-600 text-white py-2 px-3 rounded-lg hover:opacity-80 transition duration-150 ease-in-out focus:ring-red-500 focus:ring-offset-2 mx-2 uppercase"
-                                        user={user}
-                                    />
+                                        category={category}
+                                    /> */}
                                 </td>
                             </tr>
                         ))}
@@ -56,7 +51,7 @@ export default function UserTable({ className = "" }) {
                 </table>
                 <nav aria-label="Page navigation example">
                     <ul className="inline-flex -space-x-px text-sm mt-2">
-                        {users.links.map((link) => (
+                        {categories.links.map((link) => (
                             <li key={link.label}>
                                 <span>
                                     <Link

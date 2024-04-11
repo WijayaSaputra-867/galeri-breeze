@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, StrictMode } from "react";
 import ApplicationLogo from "@/Components/ApplicationLogo";
 import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/NavLink";
@@ -81,17 +81,13 @@ export default function Authenticated({ user, header, children }) {
                                                 type="button"
                                                 className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
                                             >
-                                                <img
-                                                    src={
-                                                        user.change_profile ==
-                                                        false
-                                                            ? user.profile
-                                                            : `/storage/` +
-                                                              user.profile
-                                                    }
-                                                    className="md:h-10 md:w-10 w-5 h-5 rounded-full hidden md:flex"
-                                                    alt={user.name}
-                                                />
+                                                <StrictMode>
+                                                    <img
+                                                        src="/image/profiles/profile.png"
+                                                        className="md:h-10 md:w-10 w-5 h-5 rounded-full hidden md:flex"
+                                                        alt={user.name}
+                                                    />
+                                                </StrictMode>
                                                 <span className="flex md:hidden text-sm">
                                                     {user.name}
                                                 </span>

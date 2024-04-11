@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use App\Models\Gallery;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -16,7 +17,7 @@ class GalleryController extends Controller
     public function index()
     {
         $id = Auth::user()->id;
-        $galleries = Gallery::where('user_id', $id)->paginate(10);
+        $galleries = Gallery::where('user_id', $id)->with('category')->paginate(10);
         return Inertia::render('Gallery/Index', [
             'galleries' => $galleries,
         ]);
@@ -27,7 +28,10 @@ class GalleryController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Gallery/Create');
+        $categories = Category::all();
+        return Inertia::render('Gallery/Create', [
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -35,14 +39,17 @@ class GalleryController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         $request->validate([
-            'gallery_title' => 'required|string|min:4|max:50',
+            'gallery_title' => 'required|string|min:4|max:15',
+            'gallery_category' => 'required',
             'gallery_image' => 'required|image|max:5120|mimes:png,jpg,jpeg',
             'gallery_description' => 'required|string|min:10'
         ]);
 
         Gallery::create([
             'user_id' => Auth::user()->id,
+            'category_id' =>$request->gallery_category,
             'title' => $request->gallery_title,
             'description' => $request->gallery_description,
             'image' => $request->File('gallery_image')->store('uploads/galleries')

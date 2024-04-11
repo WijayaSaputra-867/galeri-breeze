@@ -3,6 +3,7 @@ import DangerButton from "@/Components/DangerButton";
 import SecondaryButton from "@/Components/SecondaryButton";
 import { useRef, useState } from "react";
 import { useForm, usePage } from "@inertiajs/react";
+import { FaTrashAlt } from "react-icons/fa";
 
 export default function UserDeleteForm({ user, className = "" }) {
     // const user = usePage().props.user;
@@ -15,8 +16,6 @@ export default function UserDeleteForm({ user, className = "" }) {
 
     const closeModal = () => {
         setConfirmingUserDeletion(false);
-
-        reset();
     };
 
     const { delete: destroy, processing, reset } = useForm();
@@ -31,7 +30,7 @@ export default function UserDeleteForm({ user, className = "" }) {
     return (
         <div>
             <button className={className} onClick={confirmUserDeletion}>
-                Delete
+                <FaTrashAlt className="mx-auto h-4 w-4" />
             </button>
             <Modal show={confirmingUserDeletion} onClose={closeModal}>
                 <form className="p-6" onSubmit={deleteUser}>

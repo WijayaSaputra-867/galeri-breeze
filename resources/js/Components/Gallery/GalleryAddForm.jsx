@@ -3,13 +3,16 @@ import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { Transition } from "@headlessui/react";
-import { useForm } from "@inertiajs/react";
+import { useForm, usePage } from "@inertiajs/react";
 import { useState } from "react";
 
 export default function GalleryAddForm({ className = "" }) {
+    const categories = usePage().props.categories;
+
     const { data, setData, post, errors, processing, recentlySuccessful } =
         useForm({
             gallery_title: "",
+            gallery_category: null,
             gallery_image: null,
             gallery_description: "",
         });
@@ -50,7 +53,24 @@ export default function GalleryAddForm({ className = "" }) {
                         message={errors.gallery_title}
                     />
                 </div>
-
+                <div>
+                    <InputLabel htmlFor="category" value="Category gallery" />
+                    <select
+                        id="category"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        value={data.gallery_category}
+                        onChange={(e) =>
+                            setData("gallery_category", e.target.value)
+                        }
+                    >
+                        <option value="">Category</option>
+                        {categories.map((category) => (
+                            <option value={category.id} key={category.id}>
+                                {category.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
                 <div>
                     <InputLabel htmlFor="Image" value="Image Gallery" />
                     <TextInput
@@ -74,7 +94,7 @@ export default function GalleryAddForm({ className = "" }) {
                     )}
                 </div>
                 <div>
-                    <InputLabel htmlFor="title" value="Title Gallery" />
+                    <InputLabel htmlFor="title" value="Description Gallery" />
                     <textarea
                         id="title"
                         className="mt-1 block w-full rounded-lg"

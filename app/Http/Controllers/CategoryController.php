@@ -14,7 +14,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Category/Index');
+        $categories = Category::orderBy('name', 'asc')->paginate('5');
+        return Inertia::render('Category/Index', [
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -31,7 +34,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            "name" => "required|string|min:3",
+            "name" => "required|string|min:3|unique:categories,name",
         ]);
 
         Category::create([
