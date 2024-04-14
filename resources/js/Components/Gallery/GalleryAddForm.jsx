@@ -9,13 +9,20 @@ import { useState } from "react";
 export default function GalleryAddForm({ className = "" }) {
     const categories = usePage().props.categories;
 
-    const { data, setData, post, errors, processing, recentlySuccessful } =
-        useForm({
-            gallery_title: "",
-            gallery_category: null,
-            gallery_image: null,
-            gallery_description: "",
-        });
+    const {
+        data,
+        setData,
+        post,
+        errors,
+        processing,
+        recentlySuccessful,
+        reset,
+    } = useForm({
+        gallery_title: "",
+        gallery_category: null,
+        gallery_image: null,
+        gallery_description: "",
+    });
 
     const [preview, setPreview] = useState(null);
 
@@ -27,6 +34,7 @@ export default function GalleryAddForm({ className = "" }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         post(route("galleries.store", data));
+        reset();
     };
 
     return (
@@ -54,7 +62,7 @@ export default function GalleryAddForm({ className = "" }) {
                     />
                 </div>
                 <div>
-                    <InputLabel htmlFor="category" value="Category gallery" />
+                    <InputLabel htmlFor="category" value="Category Gallery" />
                     <select
                         id="category"
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"

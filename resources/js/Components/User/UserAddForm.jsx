@@ -6,17 +6,25 @@ import { useForm } from "@inertiajs/react";
 import { Transition } from "@headlessui/react";
 
 export default function UserAddForm({ className = "" }) {
-    const { data, setData, post, errors, processing, recentlySuccessful } =
-        useForm({
-            name: "",
-            email: "",
-            password: "",
-            password_confirmation: "",
-        });
+    const {
+        data,
+        setData,
+        post,
+        errors,
+        processing,
+        recentlySuccessful,
+        reset,
+    } = useForm({
+        name: "",
+        email: "",
+        password: "",
+        password_confirmation: "",
+    });
 
     const submit = (e) => {
         e.preventDefault();
         post(route("user.store"));
+        reset();
     };
 
     return (

@@ -1,8 +1,9 @@
 import { Head, usePage, Link } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { HiDotsVertical } from "react-icons/hi";
+import Dropdown from "@/Components/Dropdown";
 
-export default function Create({ auth }) {
+export default function Index({ auth }) {
     const galleries = usePage().props.galleries;
     return (
         <AuthenticatedLayout
@@ -18,31 +19,73 @@ export default function Create({ auth }) {
             <div className="py-12">
                 <div className="flex flex-wrap sm:px-6 lg:px-8">
                     {galleries.data.map((gallery) => (
-                        <Link
-                            href={`/galleries/${gallery.id}`}
-                            key={gallery.id}
-                        >
-                            <div className="md:max-w-[18rem] sm:max-w-[14rem] max-w-[12rem] mx-4 my-3 bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                                <div className="md:p-6 p-4 space-y-3">
-                                    <div className="flex flex-col">
-                                        <div className="relative ">
-                                            <h2 className="text-gray-900 font-medium md:text-xl sm:text-lg text-base capitalize top-0 left-0 absolute ">
-                                                {gallery.title}
-                                            </h2>
-                                            <div className="absolute right-0">
-                                                <HiDotsVertical />
-                                            </div>
+                        <div className="md:max-w-[18rem] sm:max-w-[14rem] max-w-[12rem] mx-4 my-3 bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                            <div className="md:p-6 p-4 space-y-3">
+                                <div className="flex flex-col">
+                                    <div>
+                                        <div className="float-right">
+                                            <Dropdown>
+                                                <Dropdown.Trigger>
+                                                    <HiDotsVertical />
+                                                </Dropdown.Trigger>
+                                                <Dropdown.Content>
+                                                    <Dropdown.Link
+                                                        href={route(
+                                                            "galleries.show",
+                                                            gallery.id
+                                                        )}
+                                                    >
+                                                        Show Album
+                                                    </Dropdown.Link>
+                                                    <Dropdown.Link
+                                                        href={route(
+                                                            "galleries.edit",
+                                                            gallery.id
+                                                        )}
+                                                    >
+                                                        Edit Album
+                                                    </Dropdown.Link>
+                                                    <Dropdown.Link
+                                                        href={route(
+                                                            "galleries.destroy",
+                                                            gallery.id
+                                                        )}
+                                                    >
+                                                        Delete Album
+                                                    </Dropdown.Link>
+                                                    <Dropdown.Link
+                                                        href={route(
+                                                            "photos.create"
+                                                        )}
+                                                    >
+                                                        Add Photo
+                                                    </Dropdown.Link>
+                                                </Dropdown.Content>
+                                            </Dropdown>
                                         </div>
-
-                                        <div className="mt-6 text-base text-sky-700">
-                                            {gallery.category.name}
-                                        </div>
+                                        <h2 className="text-gray-900 font-medium md:text-xl sm:text-lg text-base capitalize float-left text-pretty">
+                                            {gallery.title}
+                                        </h2>
                                     </div>
 
-                                    <img
-                                        src={`/storage/` + gallery.image}
-                                        alt={gallery.title}
-                                    />
+                                    <div className="text-base text-sky-700">
+                                        <Link
+                                            href={route(
+                                                "categories.show",
+                                                gallery.category_id
+                                            )}
+                                        >
+                                            {gallery.category.name}
+                                        </Link>
+                                    </div>
+                                </div>
+
+                                <img
+                                    className="h-full"
+                                    src={`/storage/` + gallery.image}
+                                    alt={gallery.title}
+                                />
+                                <div>
                                     <div className="text-sm text-sky-400 lowercase">
                                         <span>#tags1</span>
                                         <span>#tags2</span>
@@ -54,7 +97,7 @@ export default function Create({ auth }) {
                                     </div>
                                 </div>
                             </div>
-                        </Link>
+                        </div>
                     ))}
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import { useState, StrictMode } from "react";
+import { useState } from "react";
 import ApplicationLogo from "@/Components/ApplicationLogo";
 import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/NavLink";
@@ -56,7 +56,13 @@ export default function Authenticated({ user, header, children }) {
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink
                                     href={route("galleries.index")}
-                                    active={route().current("galleries.index")}
+                                    active={
+                                        route().current("galleries.index") ||
+                                        route().current("galleries.show") ||
+                                        route().current("galleries.edit")
+                                            ? true
+                                            : false
+                                    }
                                 >
                                     My Albums
                                 </NavLink>
@@ -81,13 +87,18 @@ export default function Authenticated({ user, header, children }) {
                                                 type="button"
                                                 className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
                                             >
-                                                <StrictMode>
-                                                    <img
-                                                        src="/image/profiles/profile.png"
-                                                        className="md:h-10 md:w-10 w-5 h-5 rounded-full hidden md:flex"
-                                                        alt={user.name}
-                                                    />
-                                                </StrictMode>
+                                                <img
+                                                    src={
+                                                        user.change_profile ==
+                                                        false
+                                                            ? user.profile
+                                                            : `/storage/` +
+                                                              user.profile
+                                                    }
+                                                    className="md:h-10 md:w-10 w-5 h-5 rounded-full hidden md:flex"
+                                                    alt={user.name}
+                                                />
+
                                                 <span className="flex md:hidden text-sm">
                                                     {user.name}
                                                 </span>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Gallery;
 use App\Models\Category;
@@ -52,7 +53,7 @@ class GalleryController extends Controller
             'category_id' =>$request->gallery_category,
             'title' => $request->gallery_title,
             'description' => $request->gallery_description,
-            'image' => $request->File('gallery_image')->store('uploads/galleries')
+            'image' => $request->File('gallery_image')->store('/uploads/galleries')
         ]);
 
         return Redirect::route('galleries.create');
@@ -63,7 +64,14 @@ class GalleryController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $gallery = Gallery::find($id);
+        $user = User::find($gallery->user_id);
+        $category = Category::find($gallery->category_id);
+        return Inertia::render('Gallery/Show', [
+            'gallery' => $gallery,
+            'user' => $user,
+            'category' => $category
+        ]);
     }
 
     /**

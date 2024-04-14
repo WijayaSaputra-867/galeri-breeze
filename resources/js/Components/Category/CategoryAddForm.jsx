@@ -6,14 +6,22 @@ import { Transition } from "@headlessui/react";
 import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function ({ className = "" }) {
-    const { data, setData, errors, post, processing, recentlySuccessful } =
-        useForm({
-            name: "",
-        });
+    const {
+        data,
+        setData,
+        errors,
+        post,
+        processing,
+        recentlySuccessful,
+        reset,
+    } = useForm({
+        name: "",
+    });
 
     const handleSubmit = (e) => {
         e.preventDefault();
         post(route("categories.store"));
+        reset();
     };
 
     return (
