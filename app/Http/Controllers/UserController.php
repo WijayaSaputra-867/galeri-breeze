@@ -102,7 +102,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        if($user->profile != 'image/profiles/profile.png'){
+        if($user->profile != '/image/profiles/profile.png'){
             Storage::delete($user->profile);
         }
         $user->delete();

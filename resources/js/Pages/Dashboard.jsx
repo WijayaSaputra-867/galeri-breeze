@@ -1,5 +1,6 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { usePage, Head, Link } from "@inertiajs/react";
+import SimpleDateTime from "react-simple-timestamp-to-date";
 import TextInput from "@/Components/TextInput";
 import { FaHeart } from "react-icons/fa6";
 import { IoChatbubbleEllipses } from "react-icons/io5";
@@ -18,83 +19,100 @@ export default function Dashboard({ auth }) {
             }
         >
             <Head title="Dashboard" />
-
-            <div className="py-12">
-                <div className="flex flex-wrap sm:px-6 lg:px-8">
-                    {galleries.map((gallery) => (
-                        <div className="md:max-w-[18rem] sm:max-w-[14rem] max-w-[12rem] mx-4 my-3 bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                            <div className="p-6 space-y-3">
-                                <div className="flex flex-col">
-                                    <div>
-                                        <div className="float-right">
-                                            <Dropdown>
-                                                <Dropdown.Trigger>
-                                                    <HiDotsVertical />
-                                                </Dropdown.Trigger>
-                                                <Dropdown.Content>
-                                                    <Dropdown.Link
-                                                        href={route(
-                                                            "galleries.show",
-                                                            gallery.id
-                                                        )}
-                                                    >
-                                                        Show Album
-                                                    </Dropdown.Link>
-                                                </Dropdown.Content>
-                                            </Dropdown>
-                                        </div>
-                                        <h2 className="text-gray-900 font-medium md:text-xl sm:text-lg text-base capitalize float-left text-pretty">
-                                            {gallery.title}
-                                        </h2>
-                                    </div>
-
-                                    <div className="text-base text-sky-700">
-                                        <Link
-                                            href={route(
-                                                "categories.show",
-                                                gallery.category_id
-                                            )}
-                                        >
-                                            {gallery.category.name}
-                                        </Link>
-                                    </div>
-                                    <div className="text-sm text-gray-400">
-                                        <Link
-                                            href={route(
-                                                "user.show",
-                                                gallery.user_id
-                                            )}
-                                        >
-                                            By : {gallery.user.name}
-                                        </Link>
-                                    </div>
-                                </div>
-
+            <div className="flex flex-wrap">
+                {galleries.map((gallery) => (
+                    <div className="max-w-md rounded overflow-hidden shadow-lg mx-auto mt-8">
+                        {/* <!-- Bagian atas card --> */}
+                        <div className="flex items-center justify-between px-6 py-4 bg-gray-200">
+                            {/* <!-- Pemilik gallery dan foto profil --> */}
+                            <div className="flex items-center">
                                 <img
-                                    src={`/storage/` + gallery.image}
-                                    alt={gallery.title}
+                                    className="w-10 h-10 rounded-full mr-4"
+                                    src={
+                                        gallery.user.change_profile == false
+                                            ? gallery.user.profile
+                                            : `/storage/` + gallery.user.profile
+                                    }
+                                    alt={gallery.user.name}
                                 />
-                                <div className="flex space-x-2">
-                                    <TextInput
-                                        className="w-2/4 placeholder:text-sm"
-                                        placeHolder="Comments ..."
-                                    />
-                                    <button className="w-1/4 bg-teal-700 text-white rounded-lg hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-teal-300 transition ease-in-out duration-150">
-                                        <IoChatbubbleEllipses className="mx-auto w-6 h-6" />
-                                    </button>
-                                    <button
-                                        className="w-1/4 bg-rose-700 text-white rounded-lg hover:opacity-80 transition focus:outline-none focus:ring-2 focus:ring-rose-300 ease-in-out duration-150"
-                                        disabled={
-                                            gallery.user_id == auth.user.id
-                                        }
-                                    >
-                                        <FaHeart className="mx-auto w-6 h-6" />
-                                    </button>
+                                <div className="text-sm">
+                                    <p className="text-gray-900 leading-none">
+                                        {gallery.user.name}
+                                    </p>
+                                    <p className="text-gray-600">
+                                        <SimpleDateTime>
+                                            {gallery.created_at}
+                                        </SimpleDateTime>
+                                    </p>
                                 </div>
                             </div>
+                            {/* <!-- Tombol dropdown --> */}
+                            <div className="relative">
+                                <Dropdown>
+                                    <Dropdown.Trigger>
+                                        <HiDotsVertical />
+                                    </Dropdown.Trigger>
+                                    <Dropdown.Content>
+                                        <Dropdown.Link
+                                            href={route(
+                                                "galleries.show",
+                                                gallery.id
+                                            )}
+                                        >
+                                            Show Album
+                                        </Dropdown.Link>
+                                    </Dropdown.Content>
+                                </Dropdown>
+                            </div>
                         </div>
-                    ))}
-                </div>
+                        {/* <!-- Judul galeri --> */}
+                        <h2 className="text-xl font-bold px-6 py-2 bg-gray-200 text-gray-800">
+                            {gallery.title}
+                        </h2>
+                        {/* <!-- Category --> */}
+                        <p className="px-6 py-2 text-gray-600">
+                            {gallery.category.name}
+                        </p>
+                        {/* <!-- Tags --> */}
+                        <div className="px-6 py-2">
+                            <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
+                                #Nature
+                            </span>
+                            <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
+                                #Travel
+                            </span>
+                            <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">
+                                #Adventure
+                            </span>
+                        </div>
+                        {/* <!-- Gambar --> */}
+                        <img
+                            className="w-full h-64 object-cover"
+                            src={gallery.image}
+                            alt={gallery.title}
+                        />
+                        {/* <!-- Tombol like dan form komentar --> */}
+                        <div className="flex justify-between items-center px-6 py-4">
+                            {/* <!-- Form komentar --> */}
+                            <form className="flex-grow">
+                                <div className="flex items-center border-b border-gray-500 py-2">
+                                    <input
+                                        className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                                        type="text"
+                                        placeholder="Comments Here......"
+                                    />
+                                    <button>
+                                        <IoChatbubbleEllipses className="w-6 h-6 mx-3" />
+                                    </button>
+                                </div>
+                            </form>
+                            {/* <!-- Tombol like --> */}
+                            <button>
+                                <FaHeart className="w-6 h-6" />
+                            </button>
+                        </div>
+                    </div>
+                ))}
             </div>
         </AuthenticatedLayout>
     );

@@ -6,25 +6,26 @@ import { Transition } from "@headlessui/react";
 import { useForm, usePage } from "@inertiajs/react";
 import { useState } from "react";
 
-export default function GalleryAddForm({ className = "" }) {
+export default function GalleryEditForm({ className = "" }) {
     const categories = usePage().props.categories;
+    const gallery = usePage().props.gallery;
 
     const {
         data,
         setData,
-        post,
+        patch,
         errors,
         processing,
         recentlySuccessful,
         reset,
     } = useForm({
-        gallery_title: "",
+        gallery_title: gallery.title,
         gallery_category: null,
         gallery_image: null,
-        gallery_description: "",
+        gallery_description: gallery.description,
     });
 
-    const [preview, setPreview] = useState(null);
+    const [preview, setPreview] = useState(gallery.image);
 
     const handleImageChange = (e) => {
         setData("gallery_image", e.target.files[0]);
@@ -33,7 +34,7 @@ export default function GalleryAddForm({ className = "" }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route("galleries.store", data));
+        patch(route("galleries.update", gallery.id));
         reset();
     };
 
@@ -78,10 +79,6 @@ export default function GalleryAddForm({ className = "" }) {
                             </option>
                         ))}
                     </select>
-                    <InputError
-                        className="mt-2"
-                        message={errors.gallery_category}
-                    />
                 </div>
                 <div>
                     <InputLabel htmlFor="Image" value="Image Gallery" />
@@ -122,7 +119,7 @@ export default function GalleryAddForm({ className = "" }) {
                     />
                 </div>
                 <div className="flex items-center gap-4">
-                    <PrimaryButton disabled={processing}>Upload</PrimaryButton>
+                    <PrimaryButton disabled={processing}>Update</PrimaryButton>
 
                     <Transition
                         show={recentlySuccessful}
@@ -131,7 +128,7 @@ export default function GalleryAddForm({ className = "" }) {
                         leave="transition ease-in-out"
                         leaveTo="opacity-0"
                     >
-                        <p className="text-sm text-gray-600">Uploaded.</p>
+                        <p className="text-sm text-gray-600">Updated.</p>
                     </Transition>
                 </div>
             </form>

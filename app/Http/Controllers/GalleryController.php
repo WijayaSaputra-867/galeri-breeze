@@ -62,9 +62,8 @@ class GalleryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Gallery $gallery)
     {
-        $gallery = Gallery::find($id);
         $user = User::find($gallery->user_id);
         $category = Category::find($gallery->category_id);
         return Inertia::render('Gallery/Show', [
@@ -77,15 +76,19 @@ class GalleryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Gallery $gallery)
     {
-        //
+        $categories = Category::all();
+        return Inertia::render("Gallery/Edit", [
+            'categories' => $categories,
+            'gallery' => $gallery
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Gallery $gallery)
     {
         //
     }

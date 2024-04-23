@@ -1,8 +1,8 @@
 import Modal from "@/Components/Modal";
 import DangerButton from "@/Components/DangerButton";
 import SecondaryButton from "@/Components/SecondaryButton";
-import { useRef, useState } from "react";
-import { useForm, usePage } from "@inertiajs/react";
+import { useState } from "react";
+import { useForm } from "@inertiajs/react";
 import { FaTrashAlt } from "react-icons/fa";
 
 export default function UserDeleteForm({ user, className = "" }) {
